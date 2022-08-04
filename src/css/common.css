@@ -32,8 +32,33 @@ button {
   color: black;
 } 
 
+button:hover,
+button:focus {
+  background-color: #b4aeae;
+}
+
 input {
   width: 325px;
   height: 50px;
   font-size: 25px;
+}
+.timer {
+  display: flex;
+}
+
+.field {
+  font-size: 20px;
+}
+
+.field:not(:last-child) {
+  margin-right: 15px;
+}
+
+.form__input{
+  display: block;
+  margin-top: 5px;
+}
+
+.form__btn {
+  margin-top: 10px;
 }

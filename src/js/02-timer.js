@@ -11,6 +11,8 @@ const refs = {
 
 refs.startBtn.addEventListener('click', start);
 
+let deadLine;
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -22,22 +24,21 @@ const options = {
             alert("Please choose a date in the future")
             return;
         }; 
-
         refs.startBtn.removeAttribute('disabled');
-
-        localStorage.setItem('date', selectedDates[0]);
-        
+        deadLine = selectedDates[0];
   },
 };
-
 flatpickr("#datetime-picker", options);
 
 function start() {
-    const date = new Date(localStorage.getItem('date'));
     refs.startBtn.setAttribute("disabled", "disabled");
-        setInterval(() => {
-            const toDay = new Date();
-            const delta = date - toDay;
+    const interval = setInterval(() => {
+        const toDay = new Date();
+        if (toDay > deadLine) {
+            clearInterval(interval);
+            return;
+        }
+            const delta = deadLine - toDay;
             const res = convertMs(delta);
             updateTimer(res);
         }, 1000)
@@ -51,13 +52,13 @@ function convertMs(ms) {
   const day = hour * 24;
 
   // Remaining days
-  const days = Math.floor(ms / day);
+  const days = addLeadingZero(Math.floor(ms / day));
   // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
   // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
 
   return { days, hours, minutes, seconds };
 };
@@ -74,4 +75,7 @@ function updateTimer(obj) {
     refs.mins.textContent = minutes;
     refs.secs.textContent = seconds;
 };
+function addLeadingZero(value) {
+    return String(value).padStart(2, '0');
+}
 
