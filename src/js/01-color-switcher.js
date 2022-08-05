@@ -12,7 +12,7 @@ class ColorSwitchcer {
 
     start() {
         this.updateBackgroundColor()
-        refs.start.setAttribute("disabled", "disabled");
+        refs.start.setAttribute("disabled", "trye");
         refs.stop.removeAttribute('disabled')
         this.intervalId = setInterval(() => {
             this.updateBackgroundColor()
@@ -21,7 +21,7 @@ class ColorSwitchcer {
 
     stop() {
         refs.start.removeAttribute('disabled');
-        refs.stop.setAttribute("disabled", "disabled");
+        refs.stop.setAttribute("disabled", "trye");
         clearInterval(this.intervalId);
     }
 

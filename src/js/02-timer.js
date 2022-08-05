@@ -19,8 +19,7 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
     onClose(selectedDates) {
-        if (selectedDates[0] < options.defaultDate
-            || selectedDates[0] === options.defaultDate) {
+        if (selectedDates[0] <= options.defaultDate) {
             alert("Please choose a date in the future")
             return;
         }; 
@@ -31,7 +30,7 @@ const options = {
 flatpickr("#datetime-picker", options);
 
 function start() {
-    refs.startBtn.setAttribute("disabled", "disabled");
+    refs.startBtn.setAttribute("disabled", "trye");
     const interval = setInterval(() => {
         const toDay = new Date();
         if (toDay > deadLine) {
